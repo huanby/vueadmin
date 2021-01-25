@@ -11,20 +11,36 @@
         </div>
         <h1 class="denglu">登录</h1>
         <form accept-charset="utf-8" data-view="loginView">
-          <div class="clearfix" data-propertyname="username" data-controltype="Phone">
+          <div
+            class="clearfix"
+            data-propertyname="username"
+            data-controltype="Phone"
+          >
             <input v-model="username" type="text" placeholder="输入账号" />
-            <span v-show="usernameWarn" class="input_warning">{{usernameMessage}}</span>
+            <span v-show="usernameWarn" class="input_warning">{{
+              usernameMessage
+            }}</span>
           </div>
 
-          <div class="clearfix" data-propertyname="password" data-controltype="Password">
+          <div
+            class="clearfix"
+            data-propertyname="password"
+            data-controltype="Password"
+          >
             <input v-model="password" type="password" placeholder="输入密码" />
-            <span v-show="passwordWarn" class="input_warning">{{passwordMessage}}</span>
+            <span v-show="passwordWarn" class="input_warning">{{
+              passwordMessage
+            }}</span>
           </div>
 
           <div class="clearfix">
             <a href="javascript:;" class="forgot_pwd">忘记密码？</a>
           </div>
-          <div class="clearfix btn_login" data-propertyname="submit" data-controltype="Botton">
+          <div
+            class="clearfix btn_login"
+            data-propertyname="submit"
+            data-controltype="Botton"
+          >
             <input @click="login" class="submit" type="button" value="登录" />
           </div>
           <div class="clearfix goregister">
@@ -47,20 +63,20 @@ export default {
       usernameWarn: false,
       passwordWarn: false,
       password: "",
-      passwordMessage: ""
+      passwordMessage: "",
     };
   },
   watch: {
-    username: function(newVal, oldVal) {
+    username: function (newVal, oldVal) {
       if (newVal != "") {
         this.usernameWarn = false;
       }
     },
-    password: function(newVal, oldVal) {
+    password: function (newVal, oldVal) {
       if (newVal != "") {
         this.passwordWarn = false;
       }
-    }
+    },
   },
   methods: {
     login() {
@@ -76,7 +92,7 @@ export default {
       }
       let data = {
         username: this.username,
-        password: this.password
+        password: this.password,
       };
       // this.$axios
       //   .post(
@@ -89,38 +105,41 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
-      this.$axios
-        .get("http://127.0.0.1:8089/login", {
-          params: {
-            username: this.username,
-            password: this.password
-          }
-        })
-        .then(res => {
-          console.log(res.data);
-          if (res.data.status == 200) {
-            //获取set-cookie
-            // alert(res.headers['set-cookie']);
-            // console.log(res.headers['set-cookie']);
-            // console.log(document);
-            // console.log(res);
-            // let allCookies = document.cookie
-            // alert(allCookies);
-            this.$store.commit("login", true);
-            this.$router.push("/");
-            console.log("登录成功");
-          } else {
-            this.$message({
-              message: res.data.message,
-              type: "warning"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  }
+      // this.$axios
+      //   .get("http://127.0.0.1:8089/login", {
+      //     params: {
+      //       username: this.username,
+      //       password: this.password
+      //     }
+      //   })
+      //   .then(res => {
+      //     console.log(res.data);
+      //     if (res.data.status == 200) {
+      //       //获取set-cookie
+      //       // alert(res.headers['set-cookie']);
+      //       // console.log(res.headers['set-cookie']);
+      //       // console.log(document);
+      //       // console.log(res);
+      //       // let allCookies = document.cookie
+      //       // alert(allCookies);
+      //       this.$store.commit("login", true);
+      //       this.$router.push("/");
+      //       console.log("登录成功");
+      //     } else {
+      //       this.$message({
+      //         message: res.data.message,
+      //         type: "warning"
+      //       });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      this.$store.commit("login", true);
+      this.$router.push("/");
+      console.log("登录成功");
+    },
+  },
 };
 </script>
 

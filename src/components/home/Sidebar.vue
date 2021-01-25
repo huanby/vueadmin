@@ -92,6 +92,29 @@ export default {
               title: "app用户"
             }
           ]
+        },
+        {
+          icon: "el-icon-question",
+          index: "system",
+          title: "系统管理",
+          subs: [
+            {
+              index: "userManage",
+              title: "用户管理"
+            },
+            {
+              index: "roleManage",
+              title: "角色管理",
+            },
+            {
+              index: "systemManage",
+              title: "系统菜单"
+            },
+            {
+              index: "deptManage",
+              title: "部门管理"
+            }
+          ]
         }
       ]
     };
