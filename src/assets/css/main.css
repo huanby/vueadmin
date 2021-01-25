@@ -1,0 +1,34 @@
+/* * {
+    margin: 0;
+    padding: 0;
+} */
+
+html,
+body,
+#app,
+.wrapper {
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
+}
+
+a {
+    text-decoration: none
+}
+.container {
+    /* width: 100%; */
+    height: 90%;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.el-card__body{
+    height: 100% !important
+ }
