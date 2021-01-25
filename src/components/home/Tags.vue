@@ -38,12 +38,10 @@ export default {
   methods: {
     //是否选中
     isActive(path) {
-      debugger;
       return path === this.$route.fullPath;
     },
     // 关闭单个标签
     closeTags(index) {
-      debugger;
       const delItem = this.tagsList.splice(index, 1)[0];
       const item = this.tagsList[index]
         ? this.tagsList[index]
@@ -119,7 +117,6 @@ export default {
   },
   watch: {
     $route(newValue, oldValue) {
-      debugger;
       this.setTags(newValue);
     }
   },
@@ -127,7 +124,6 @@ export default {
     this.setTags(this.$route);
     // 监听关闭当前页面的标签页
     // this.$EventBus.$on("close_current_tags", () => {
-    //   debugger;
     //   for (let i = 0, len = this.tagsList.length; i < len; i++) {
     //     const item = this.tagsList[i];
     //     if (item.path === this.$route.fullPath) {

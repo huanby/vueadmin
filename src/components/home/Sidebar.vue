@@ -1,3 +1,4 @@
+
 <template>
   <div class="sidebar">
     <el-menu
@@ -49,7 +50,7 @@ export default {
       menuItems: [],
       items: [
         {
-          icon: "el-icon-house",
+          icon: "iconfont emoji_fill",
           index: "dashboard",
           title: "系统首页"
         },
@@ -78,18 +79,48 @@ export default {
               title: "表单"
             },
             {
-              index: "",
-              title: "图片",
-              subs: [
-                {
-                  index: "showimg",
-                  title: "头像"
-                }
-              ]
-            },
-            {
               index: "appuser",
               title: "app用户"
+            }
+          ]
+        },
+        //系统管理
+        {
+          icon: "el-icon-question",
+          index: "system",
+          title: "系统管理",
+          subs: [
+            {
+              index: "userManage",
+              title: "用户管理"
+            },
+            {
+              index: "roleManage",
+              title: "角色管理"
+            },
+            {
+              index: "systemManage",
+              title: "系统菜单"
+            },
+            {
+              index: "deptManage",
+              title: "部门管理"
+            }
+          ]
+        },
+        //任务调度
+        {
+          icon: "el-icon-question",
+          index: "job",
+          title: "任务调度",
+          subs: [
+            {
+              index: "timedTask",
+              title: "定时任务"
+            },
+            {
+              index: "TaskLog",
+              title: "调度日志"
             }
           ]
         }
@@ -109,6 +140,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .sidebar {
   display: block;
@@ -127,4 +159,7 @@ export default {
 .sidebar > ul {
   height: 100%;
 }
+/* .iconfont {
+  font-size: 25px;
+} */
 </style>

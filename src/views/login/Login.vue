@@ -1,31 +1,39 @@
 <template>
   <div>
     <div class="background">
-      <img :src="imgSrc" width="100%" height="100%" alt />
+      <img :src="imgSrc" width="100%" height="100%" alt>
     </div>
     <div>
       <!-- 页面主体START -->
       <section id="main">
         <div class="user-avator">
-          <img src="../../assets/imgs/hh.gif" />
+          <img src="../../assets/imgs/user.gif">
         </div>
-        <h1 class="denglu">登录</h1>
+        <h2 class="denglu">GALE权限管理</h2>
         <form accept-charset="utf-8" data-view="loginView">
-          <div class="clearfix" data-propertyname="username" data-controltype="Phone">
-            <input v-model="username" type="text" placeholder="输入账号" />
-            <span v-show="usernameWarn" class="input_warning">{{usernameMessage}}</span>
+          <div class="clearfix" style="margin-bottom: 10px;">
+            <el-input placeholder="请输入用户名" v-model="username" size="medium"></el-input>
+            <span v-show="usernameWarn" class="input_warning">
+              {{
+              usernameMessage
+              }}
+            </span>
           </div>
 
-          <div class="clearfix" data-propertyname="password" data-controltype="Password">
-            <input v-model="password" type="password" placeholder="输入密码" />
-            <span v-show="passwordWarn" class="input_warning">{{passwordMessage}}</span>
+          <div class="clearfix">
+            <el-input placeholder="请输入密码" v-model="password" show-password size="medium"></el-input>
+            <span v-show="passwordWarn" class="input_warning">
+              {{
+              passwordMessage
+              }}
+            </span>
           </div>
 
           <div class="clearfix">
             <a href="javascript:;" class="forgot_pwd">忘记密码？</a>
           </div>
           <div class="clearfix btn_login" data-propertyname="submit" data-controltype="Botton">
-            <input @click="login" class="submit" type="button" value="登录" />
+            <el-button @click="login" type="success" class="submit" round>登录</el-button>
           </div>
           <div class="clearfix goregister">
             <span class="reg_now">没有帐号？</span>
@@ -132,90 +140,8 @@ export default {
   position: absolute;
 }
 html {
-  font-size: 14px;
   width: 100%;
   height: 100%;
-}
-a {
-  background-color: transparent;
-  outline: 0;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-p {
-  margin: 0;
-}
-p + p {
-  margin-top: 10px;
-}
-img {
-  border: 0;
-  vertical-align: top;
-  display: inline-block;
-}
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: "Hiragino Sans GB", "Microsoft Yahei", SimSun, Arial;
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #cecece;
-}
-button:focus,
-input:focus,
-optgroup:focus,
-select:focus,
-textarea:focus {
-  outline: 0;
-}
-input[type="text"],
-input[type="password"] {
-  color: #333;
-  width: 280px;
-  border: 1px solid #cecece;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  padding: 12px;
-  margin: 9px 0;
-}
-label,
-select,
-button,
-input[type="button"] {
-  cursor: pointer;
-}
-i {
-  font-style: normal;
-}
-ul {
-  margin: 0;
-  padding: 0;
-}
-li {
-  list-style: none;
-}
-.fl {
-  float: left;
-}
-.fr {
-  float: right;
-}
-.clearfix {
-  *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-  content: "";
-  display: table;
-}
-.clearfix:after {
-  clear: both;
 }
 #main {
   width: 306px;
@@ -227,33 +153,20 @@ li {
   margin: 0 0 108px -233px;
   z-index: 2;
 }
-.input_tips {
-  color: #fd5f39;
-  margin-top: -3px;
-  display: block;
-}
 .input_warning {
   color: #fd5f39;
 }
 #main .submit {
-  border: 0;
   height: 46px;
   width: 100%;
   color: #fff;
   font-size: 16px;
   text-align: center;
   background: #3dca99;
-  -webkit-border-radius: 23px;
-  -moz-border-radius: 23px;
-  border-radius: 23px;
   margin: 18px 0;
 }
 #main .btn_login {
   border-bottom: 1px solid #e3e4e5;
-}
-#main .autologin {
-  color: #555;
-  margin: 9px 3px 0 0;
 }
 #main .forgot_pwd {
   float: right;
@@ -274,9 +187,6 @@ li {
   -moz-border-radius: 18px;
   border-radius: 15px;
 }
-#main .goregister a:hover {
-  text-decoration: none;
-}
 .user-avator {
   display: flex;
   justify-content: center;
@@ -289,10 +199,8 @@ li {
   border-radius: 50%;
 }
 .denglu {
-  font-size: 14px;
-  color: #555;
+  /* font-size: 20px; */
+  color: #87ad81;
   text-align: center;
-  width: 64px;
-  margin: 0 auto 25px;
 }
 </style>

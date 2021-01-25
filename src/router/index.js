@@ -61,20 +61,69 @@ const routes = [
         }
       },
       {
-        path: '/showimg',
-        name: 'showimg',
-        component: resolve => require(['../views/test/Showimg.vue'], resolve),
-        meta: {
-          title: '头像',
-          requireAuth: true
-        }
-      },
-      {
         path: '/appuser',
         name: 'appuser',
         component: resolve => require(['../views/test/AppUser.vue'], resolve),
         meta: {
           title: 'app用户',
+          requireAuth: true
+        }
+      },
+
+      // 系统管理
+      {
+        path: '/userManage',
+        name: 'userManage',
+        component: resolve => require(['../views/system/UserManage.vue'], resolve),
+        meta: {
+          title: '用户管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/roleManage',
+        name: 'roleManage',
+        component: resolve => require(['../views/system/RoleManage.vue'], resolve),
+        meta: {
+          title: '角色管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/systemManage',
+        name: 'systemManage',
+        component: resolve => require(['../views/system/SystemManage.vue'], resolve),
+        meta: {
+          title: '系统管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/deptManage',
+        name: 'deptManage',
+        component: resolve => require(['../views/system/DeptManage.vue'], resolve),
+        meta: {
+          title: '部门管理',
+          requireAuth: true
+        }
+      },
+
+      //任务调度
+      {
+        path: '/timedTask',
+        name: 'timedTask',
+        component: resolve => require(['../views/job/TimedTask.vue'], resolve),
+        meta: {
+          title: '定时任务',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/taskLog',
+        name: 'taskLog',
+        component: resolve => require(['../views/job/TaskLog.vue'], resolve),
+        meta: {
+          title: '调度日志',
           requireAuth: true
         }
       },
