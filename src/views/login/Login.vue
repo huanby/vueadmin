@@ -55,20 +55,20 @@ export default {
       usernameWarn: false,
       passwordWarn: false,
       password: "",
-      passwordMessage: ""
+      passwordMessage: "",
     };
   },
   watch: {
-    username: function(newVal, oldVal) {
+    username: function (newVal, oldVal) {
       if (newVal != "") {
         this.usernameWarn = false;
       }
     },
-    password: function(newVal, oldVal) {
+    password: function (newVal, oldVal) {
       if (newVal != "") {
         this.passwordWarn = false;
       }
-    }
+    },
   },
   methods: {
     login() {
@@ -84,7 +84,7 @@ export default {
       }
       let data = {
         username: this.username,
-        password: this.password
+        password: this.password,
       };
       // this.$axios
       //   .post(
@@ -97,38 +97,41 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
-      this.$axios
-        .get("http://127.0.0.1:8089/login", {
-          params: {
-            username: this.username,
-            password: this.password
-          }
-        })
-        .then(res => {
-          console.log(res.data);
-          if (res.data.status == 200) {
-            //获取set-cookie
-            // alert(res.headers['set-cookie']);
-            // console.log(res.headers['set-cookie']);
-            // console.log(document);
-            // console.log(res);
-            // let allCookies = document.cookie
-            // alert(allCookies);
-            this.$store.commit("login", true);
-            this.$router.push("/");
-            console.log("登录成功");
-          } else {
-            this.$message({
-              message: res.data.message,
-              type: "warning"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  }
+      // this.$axios
+      //   .get("http://127.0.0.1:8089/login", {
+      //     params: {
+      //       username: this.username,
+      //       password: this.password
+      //     }
+      //   })
+      //   .then(res => {
+      //     console.log(res.data);
+      //     if (res.data.status == 200) {
+      //       //获取set-cookie
+      //       // alert(res.headers['set-cookie']);
+      //       // console.log(res.headers['set-cookie']);
+      //       // console.log(document);
+      //       // console.log(res);
+      //       // let allCookies = document.cookie
+      //       // alert(allCookies);
+      //       this.$store.commit("login", true);
+      //       this.$router.push("/");
+      //       console.log("登录成功");
+      //     } else {
+      //       this.$message({
+      //         message: res.data.message,
+      //         type: "warning"
+      //       });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      this.$store.commit("login", true);
+      this.$router.push("/");
+      console.log("登录成功");
+    },
+  },
 };
 </script>
 

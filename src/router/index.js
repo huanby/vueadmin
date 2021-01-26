@@ -127,6 +127,44 @@ const routes = [
           requireAuth: true
         }
       },
+
+      // 系统管理
+      {
+        path: '/userManage',
+        name: 'userManage',
+        component: resolve => require(['../views/system/UserManage.vue'], resolve),
+        meta: {
+          title: '用户管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/roleManage',
+        name: 'roleManage',
+        component: resolve => require(['../views/system/RoleManage.vue'], resolve),
+        meta: {
+          title: '角色管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/systemManage',
+        name: 'systemManage',
+        component: resolve => require(['../views/system/SystemManage.vue'], resolve),
+        meta: {
+          title: '系统管理',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/deptManage',
+        name: 'deptManage',
+        component: resolve => require(['../views/system/DeptManage.vue'], resolve),
+        meta: {
+          title: '部门管理',
+          requireAuth: true
+        }
+      },
     ]
   }
 ]
