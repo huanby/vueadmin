@@ -137,6 +137,17 @@ export default {
     this.$EventBus.$on("collapse", msg => {
       this.collapse = msg;
     });
+  },
+   mounted() {
+    // 请求首页展示数据
+    this.$axios
+      .post("/api/index")
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>

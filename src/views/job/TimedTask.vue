@@ -103,7 +103,7 @@ export default {
       let params = JSON.parse(JSON.stringify(this.insertOrUpdateform));
       console.log(params, "params.......................");
       this.$axios
-        .get(this.$url + "/job/add", {
+        .get("/api/job/add", {
           params: params
         })
         .then(res => {
