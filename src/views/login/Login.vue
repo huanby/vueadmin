@@ -86,17 +86,17 @@ export default {
         username: this.username,
         password: this.password,
       };
-      // this.$axios
-      //   .post(
-      //     "http://127.0.0.1:8089/login",
-      //     this.$qs.stringify(data)
-      //   )
-      //   .then(res => {
-      //     console.log(res.data);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      this.$axios
+        .post(
+          "http://127.0.0.1:8089/login",
+          this.$qs.stringify(data)
+        )
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
       // this.$axios
       //   .get("http://127.0.0.1:8089/login", {
       //     params: {
