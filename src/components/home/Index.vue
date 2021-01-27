@@ -55,6 +55,17 @@ export default {
       //利用router-view key值变化会导致内容刷新来实现页面强制刷新
       this.$set(this.bindKeys, this.$route.name, new Date().getTime());
     });
+  },
+  mounted() {
+    // 请求首页展示数据
+    this.$axios
+      .post("http://127.0.0.1:8089/index")
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>
