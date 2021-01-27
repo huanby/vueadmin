@@ -5,6 +5,7 @@ import store from './store'
 import axios from 'axios'
 import qs from 'qs'
 import ElementUI from 'element-ui';
+import utils from './assets/js/utils.js'
 import 'element-ui/lib/theme-chalk/index.css';
 //import './assets/css/theme-green/index.css';       // 浅绿色主题
 import "./assets/icon/iconfont.css"; //引入阿里巴巴矢量图标库
@@ -24,6 +25,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 Vue.prototype.$EventBus = new Vue()
+Vue.prototype.$utils = utils
 
 //路由守卫(判断是否登录)
 router.beforeEach((to, from, next) => {

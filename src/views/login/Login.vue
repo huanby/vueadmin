@@ -95,7 +95,7 @@ export default {
       //     console.log(err);
       //   });
       this.$axios
-        .get("/api/login", {
+        .get("http://127.0.0.1:8089/login", {
           params: {
             username: this.username,
             password: this.password
