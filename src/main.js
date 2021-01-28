@@ -19,7 +19,7 @@ Vue.use(ElementUI, {
 });
 axios.defaults.withCredentials = true;
 //设置请求头
-axios.defaults.headers.post["Content-type"] = "application/json"
+axios.defaults.headers.post["Content-type"] = "application/json;charset=UTF-8"
 // 全局属性
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs

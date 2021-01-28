@@ -224,16 +224,16 @@ export default {
      * 暂停任务
      */
     stopTask() {
-      if (this.multipleSelection.length != 1) {
+      if (this.multipleSelection.length == 0) {
         this.$message({
-          message: "请先勾选1行数据！",
+          message: "请先勾选数据！",
           type: "warning"
         });
         return;
       }
       this.$axios
-        .get("http://127.0.0.1:8089/job/pauseJob", {
-          params: this.multipleSelection[0]
+        .post("http://127.0.0.1:8089/job/pauseJob", {
+          list: JSON.stringify(this.multipleSelection)
         })
         .then(res => {
           if (res.data.data == 1) {
@@ -252,16 +252,16 @@ export default {
      * 恢复任务
      */
     recoverTask() {
-      if (this.multipleSelection.length != 1) {
+      if (this.multipleSelection.length == 0) {
         this.$message({
-          message: "请先勾选1行数据！",
+          message: "请先勾选数据！",
           type: "warning"
         });
         return;
       }
       this.$axios
-        .get("http://127.0.0.1:8089/job/resumeJob", {
-          params: this.multipleSelection[0]
+        .post("http://127.0.0.1:8089/job/resumeJob", {
+          list: JSON.stringify(this.multipleSelection)
         })
         .then(res => {
           if (res.data.data == 1) {
