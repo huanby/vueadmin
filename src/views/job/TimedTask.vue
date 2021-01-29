@@ -127,11 +127,11 @@ export default {
       insertOrUpdateFormVisible: false,
       insertOrUpdateform: {
         jobName: "",
-        beanName: "TestQuartz",
+        beanName: "testTask",
         jobgroup: "",
-        methodName: "sayhello",
-        params: "",
-        cronExpression: "",
+        methodName: "test",
+        params: "这是一条消息",
+        cronExpression: "*/5 * * * * ?",
         remark: ""
       },
       //insertOrUpdateform验证
