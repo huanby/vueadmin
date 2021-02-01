@@ -112,7 +112,9 @@
           <el-input v-model="insertOrUpdateform.params"></el-input>
         </el-form-item>
         <el-form-item label="cron表达式" prop="cronExpression" :label-width="formLabelWidth">
-          <el-input v-model="insertOrUpdateform.cronExpression"></el-input>
+          <el-input v-model="insertOrUpdateform.cronExpression">
+            <el-button @click="cronTools" slot="append" icon="el-icon-s-tools"></el-button>
+          </el-input>
         </el-form-item>
         <el-form-item label="任务备注" :label-width="formLabelWidth">
           <el-input v-model="insertOrUpdateform.remark"></el-input>
@@ -123,9 +125,12 @@
         <el-button type="primary" @click="btn_submit">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 2.注册并且使用 @cronResult="xx" 事件可以接收到最终的表达式-->
+    <CronUi ref="CronUi" @cronResult="resultValue"></CronUi>
   </div>
 </template>
 <script>
+import CronUi from "@/components/cron/cron-ui/index";
 export default {
   name: "timedTask",
   data: function() {
@@ -170,6 +175,7 @@ export default {
       }
     };
   },
+  components: { CronUi },
   methods: {
     // formater
     dateFormatter: function(row, column, cellValue, index) {
@@ -419,6 +425,14 @@ export default {
         }
       });
       return flag;
+    },
+    //cron 编辑器
+    cronTools() {
+      this.$refs["CronUi"].dialogVisible = true;
+    },
+    // 一次一个表达式---最终产生出来的cron表达式
+    resultValue(data) {
+      this.insertOrUpdateform.cronExpression = data;
     }
   },
   mounted() {

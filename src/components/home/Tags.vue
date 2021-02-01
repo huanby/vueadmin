@@ -1,18 +1,29 @@
 <template>
   <div class="tags" v-if="showTags">
-    <ul>
-      <li
-        class="tags-li"
-        v-for="(item,index) in tagsList"
-        :class="{'active': isActive(item.path)}"
-        :key="index"
+    <div class="tags-cont">
+      <i class="el-icon-d-arrow-left" style="width:20px;line-height: 40px;margin-left: 10px"></i>
+      <el-scrollbar
+        ref="scrollContainer"
+        :vertical="false"
+        class="scroll-container"
+        style="width:100%;height:100%"
       >
-        <router-link :to="item.path" class="tags-li-title">{{item.title}}</router-link>
-        <span v-show="item.path!= '/dashboard'" class="tags-li-icon" @click="closeTags(index)">
-          <i class="el-icon-close"></i>
-        </span>
-      </li>
-    </ul>
+        <ul>
+          <li
+            class="tags-li"
+            v-for="(item,index) in tagsList"
+            :class="{'active': isActive(item.path)}"
+            :key="index"
+          >
+            <router-link :to="item.path" class="tags-li-title">{{item.title}}</router-link>
+            <span v-show="item.path!= '/dashboard'" class="tags-li-icon" @click="closeTags(index)">
+              <i class="el-icon-close"></i>
+            </span>
+          </li>
+        </ul>
+      </el-scrollbar>
+      <i class="el-icon-d-arrow-right" style="width:20px;line-height: 40px;"></i>
+    </div>
     <div class="tags-close-box">
       <el-dropdown @command="handleTags">
         <el-button class="mbtn" type="primary" style="background-color: #009688;">
@@ -75,7 +86,7 @@ export default {
         return item.path === route.fullPath;
       });
       if (!isExist) {
-        if (this.tagsList.length >= 8) {
+        if (this.tagsList.length >= 10) {
           this.tagsList.splice(1, 1);
         }
         this.tagsList.push({
@@ -109,10 +120,37 @@ export default {
     refreshTag() {
       this.$EventBus.$emit("refreshTag");
     },
+    // deltaXleft() {
+    //   alert("222");
+    //   const $scrollWrapper = this.scrollWrapper;
+    //   let leftScoll = $scrollWrapper.scrollWidth;
+    //   const timer = setInterval(() => {
+    //     leftScoll = parseInt(leftScoll / 10);
+    //     if (leftScoll <= 0) {
+    //       clearInterval(timer);
+    //       $scrollWrapper.scrollLeft = leftScoll;
+    //     }
+    //   }, 15);
+    // },
+    // deltaXright(e) {
+    //   const $scrollWrapper = this.scrollWrapper;
+    //   let left = 1;
+    //   const leftScoll = $scrollWrapper.scrollWidth;
+    //   const timer = setInterval(() => {
+    //     left = left * 10;
+    //     if (leftScoll <= left) {
+    //       clearInterval(timer);
+    //       $scrollWrapper.scrollLeft = left;
+    //     }
+    //   }, 15);
+    // }
   },
   computed: {
     showTags() {
       return this.tagsList.length > 0;
+    },
+    scrollWrapper() {
+      return this.$refs.scrollContainer.$refs.wrap;
     }
   },
   watch: {
@@ -122,22 +160,6 @@ export default {
   },
   created() {
     this.setTags(this.$route);
-    // 监听关闭当前页面的标签页
-    // this.$EventBus.$on("close_current_tags", () => {
-    //   for (let i = 0, len = this.tagsList.length; i < len; i++) {
-    //     const item = this.tagsList[i];
-    //     if (item.path === this.$route.fullPath) {
-    //       if (i < len - 1) {
-    //         this.$router.push(this.tagsList[i + 1].path);
-    //       } else if (i > 0) {
-    //         this.$router.push(this.tagsList[i - 1].path);
-    //       } else {
-    //         this.$router.push("/");
-    //       }
-    //       this.tagsList.splice(i, 1);
-    //     }
-    //   }
-    // });
   }
 };
 </script>
@@ -152,12 +174,12 @@ export default {
   padding-right: 120px;
   box-shadow: 0 5px 10px #ddd;
 }
-
 .tags ul {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
+  margin-left: 20px;
   width: 100%;
   height: 100%;
 }
@@ -219,5 +241,17 @@ export default {
   background: #fff;
   box-shadow: -3px 0 15px 3px rgba(0, 0, 0, 0.1);
   z-index: 10;
+}
+.tags-cont {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+}
+</style>
+<style>
+.el-scrollbar__wrap {
+  overflow-x: hidden;
 }
 </style>
