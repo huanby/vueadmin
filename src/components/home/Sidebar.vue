@@ -84,9 +84,6 @@ export default {
               title: "app用户"
             }
           ]
-<<<<<<< HEAD
-        }
-=======
         },
         // 系统监控
         {
@@ -100,7 +97,6 @@ export default {
             }         
           ]
         },
->>>>>>> 78a975b (定时任务完成)
         //系统管理
         // {
         //   icon: "el-icon-question",
