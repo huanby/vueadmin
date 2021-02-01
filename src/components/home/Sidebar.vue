@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       collapse: false,
+      //menuItems的作用
       menuItems: [],
       items: [
         {
@@ -83,47 +84,47 @@ export default {
               title: "app用户"
             }
           ]
-        },
-        //系统管理
-        {
-          icon: "el-icon-question",
-          index: "system",
-          title: "系统管理",
-          subs: [
-            {
-              index: "userManage",
-              title: "用户管理"
-            },
-            {
-              index: "roleManage",
-              title: "角色管理"
-            },
-            {
-              index: "systemManage",
-              title: "系统菜单"
-            },
-            {
-              index: "deptManage",
-              title: "部门管理"
-            }
-          ]
-        },
-        //任务调度
-        {
-          icon: "el-icon-question",
-          index: "job",
-          title: "任务调度",
-          subs: [
-            {
-              index: "timedTask",
-              title: "定时任务"
-            },
-            {
-              index: "TaskLog",
-              title: "调度日志"
-            }
-          ]
         }
+        //系统管理
+        // {
+        //   icon: "el-icon-question",
+        //   index: "system",
+        //   title: "系统管理",
+        //   subs: [
+        //     {
+        //       index: "userManage",
+        //       title: "用户管理"
+        //     },
+        //     {
+        //       index: "roleManage",
+        //       title: "角色管理"
+        //     },
+        //     {
+        //       index: "systemManage",
+        //       title: "系统菜单"
+        //     },
+        //     {
+        //       index: "deptManage",
+        //       title: "部门管理"
+        //     }
+        //   ]
+        // },
+        //任务调度
+        // {
+        //   icon: "el-icon-question",
+        //   index: "job",
+        //   title: "任务调度",
+        //   subs: [
+        //     {
+        //       index: "timedTask",
+        //       title: "定时任务"
+        //     },
+        //     {
+        //       index: "TaskLog",
+        //       title: "调度日志"
+        //     }
+        //   ]
+        // }
       ]
     };
   },
@@ -138,12 +139,40 @@ export default {
       this.collapse = msg;
     });
   },
-   mounted() {
+  mounted() {
     // 请求首页展示数据
     this.$axios
       .post("http://127.0.0.1:8089/index")
       .then(res => {
+        console.log("success");
         console.log(res.data);
+        //菜单赋值为空
+        // this.items = []
+        // const arr = ["1", "2"];
+        // console.log(res.data.menus);
+        res.data.menus.forEach(element => {
+          // console.log(element);
+          var subs = [];
+          if (element.children != null) {
+            //遍历数组
+            for (const item of element.children) {
+              // console.log(item);
+              // console.log(item.attributes.route);
+              subs.push({
+                index: item.attributes.route,
+                // $route: item.attributes.route,
+                // url: item.attributes.route,
+                title: item.text
+              });
+            }
+          }
+          this.items.push({
+            icon: element.attributes.icon,
+            index: element.attributes.route,
+            title: element.text,
+            subs: subs
+          });
+        });
       })
       .catch(err => {
         console.log(err);
