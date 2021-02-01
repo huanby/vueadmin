@@ -84,7 +84,23 @@ export default {
               title: "app用户"
             }
           ]
+<<<<<<< HEAD
         }
+=======
+        },
+        // 系统监控
+        {
+          icon: "el-icon-question",
+          index: "monitor",
+          title: "系统监控",
+          subs: [
+            {
+              index: "swagger",
+              title: "swagger文档"
+            }         
+          ]
+        },
+>>>>>>> 78a975b (定时任务完成)
         //系统管理
         // {
         //   icon: "el-icon-question",

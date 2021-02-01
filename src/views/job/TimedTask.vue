@@ -22,20 +22,23 @@
                 <el-button icon="el-icon-s-operation">菜单</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="insertTask">新增任务</el-dropdown-item>
-                  <el-dropdown-item command="deleteTask">删除任务</el-dropdown-item>
+                  <el-dropdown-item command="batchDelete">删除任务</el-dropdown-item>
                   <el-dropdown-item command="stopTask">暂停任务</el-dropdown-item>
                   <el-dropdown-item command="recoverTask">恢复任务</el-dropdown-item>
-                  <el-dropdown-item command="runTask">执行任务</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-button icon="el-icon-search" style="float: right;margin-right: 10px;">搜索</el-button>
+              <el-button
+                @click="selectJobInfos"
+                icon="el-icon-search"
+                style="float: right;margin-right: 10px;"
+              >搜索</el-button>
             </el-form>
           </div>
           <div :style="{'width': '100%','height':tableHeight}">
             <el-table
               :data="tableData"
-              height="100%"
+              height="98%"
               @selection-change="handleSelectionChange"
               border
               size="mini"
@@ -81,6 +84,16 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              style="float:right"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="pagination.currentPage"
+              :page-sizes="pagination.pageSizes"
+              :page-size="pagination.pageSize"
+              layout="prev, pager, next, jumper, sizes,total"
+              :total="pagination.total"
+            ></el-pagination>
           </div>
         </el-card>
       </el-main>
@@ -117,6 +130,7 @@ export default {
   name: "timedTask",
   data: function() {
     return {
+      isInsert: true,
       clientHeight: "",
       queryform: {
         beanName: "",
@@ -147,7 +161,13 @@ export default {
         ]
       },
       tableData: [],
-      multipleSelection: []
+      multipleSelection: [],
+      pagination: {
+        currentPage: 1,
+        total: 0,
+        pageSizes: [100, 200, 300, 400],
+        pageSize: 100
+      }
     };
   },
   methods: {
@@ -163,32 +183,96 @@ export default {
     taskCommand(value) {
       if (value == "insertTask") {
         this.insertTask();
-      } else if (value == "deleteTask") {
-      } else if (value == "deleteTask") {
+      } else if (value == "batchDelete") {
+        this.batchDelete();
       } else if (value == "stopTask") {
         this.stopTask();
       } else if (value == "recoverTask") {
         this.recoverTask();
-      } else if (value == "runTask") {
       }
     },
+    handleSizeChange(val) {
+      this.pagination.pageSize = val;
+      this.selectJobInfos();
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.pagination.currentPage = val;
+      this.selectJobInfos();
+      console.log(`当前页: ${val}`);
+    },
     insertTask() {
+      this.isInsert = true;
       this.insertOrUpdateFormVisible = true;
     },
     selectJobInfos() {
       this.$axios
         .get("http://127.0.0.1:8089/job/list", {
-          params: {}
+          params: {
+            pageSize: this.pagination.pageSize,
+            currentPage: this.pagination.currentPage,
+            beanName: this.queryform.beanName,
+            methodName: this.queryform.methodName,
+            status: this.queryform.status
+          }
         })
         .then(res => {
-          console.log(res.data);
-          this.tableData = res.data.data;
+          this.tableData = res.data.data.records;
+          this.pagination.total = res.data.data.total;
         })
         .catch(err => {
           console.log(err);
         });
     },
-    handleEdit() {},
+    /**
+     * 批量删除任务
+     */
+    batchDelete() {
+      if (this.multipleSelection.length == 0) {
+        this.$message({
+          message: "请先勾选数据！",
+          type: "warning"
+        });
+        return;
+      }
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$axios
+            .post("http://127.0.0.1:8089/job/batchDelete", {
+              list: JSON.stringify(this.multipleSelection)
+            })
+            .then(res => {
+              if (res.data.data == 1) {
+                this.$message({
+                  message: "操作成功！",
+                  type: "success"
+                });
+                this.selectJobInfos();
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    handleEdit(row) {
+      this.isInsert = false;
+      this.insertOrUpdateform = JSON.parse(JSON.stringify(row));
+      this.insertOrUpdateFormVisible = true;
+    },
+    /**
+     * 删除任务
+     */
     handleDelete(row) {
       this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -286,23 +370,43 @@ export default {
       // 值拷贝
       let params = JSON.parse(JSON.stringify(this.insertOrUpdateform));
       // alert(this.validate());
-      this.$axios
-        .get("http://127.0.0.1:8089/job/add", {
-          params: params
-        })
-        .then(res => {
-          if (res.data.data == 1) {
-            this.$message({
-              message: "操作成功！",
-              type: "success"
-            });
-            this.insertOrUpdateFormVisible = false;
-            this.selectJobInfos();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (this.isInsert) {
+        this.$axios
+          .get("http://127.0.0.1:8089/job/add", {
+            params: params
+          })
+          .then(res => {
+            if (res.data.data == 1) {
+              this.$message({
+                message: "操作成功！",
+                type: "success"
+              });
+              this.insertOrUpdateFormVisible = false;
+              this.selectJobInfos();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        this.$axios
+          .get("http://127.0.0.1:8089/job/update", {
+            params: params
+          })
+          .then(res => {
+            if (res.data.data == 1) {
+              this.$message({
+                message: "操作成功！",
+                type: "success"
+              });
+              this.insertOrUpdateFormVisible = false;
+              this.selectJobInfos();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     // insertOrUpdateform验证
     validate() {

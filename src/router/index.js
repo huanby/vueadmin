@@ -165,6 +165,17 @@ const routes = [
           requireAuth: true
         }
       },
+
+      //系统监控
+      {
+        path: '/swagger',
+        name: 'swagger',
+        component: resolve => require(['../views/monitor/Swagger.vue'], resolve),
+        meta: {
+          title: 'swagger文档',
+          requireAuth: true
+        }
+      },
     ]
   }
 ]
