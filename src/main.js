@@ -14,6 +14,7 @@ import 'leaflet/dist/leaflet.css'
 import '@supermap/iclient-leaflet'
 import L from "leaflet";
 import baseUrl from'@/assets/js/baseUrl.js'
+import './assets/js/shiro-login.js'
 Vue.use(L);
 Vue.use(ElementUI, {
   size: 'small'
