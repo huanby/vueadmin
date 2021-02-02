@@ -13,6 +13,7 @@ import "./assets/icon/iconfont.css"; //引入阿里巴巴矢量图标库
 import 'leaflet/dist/leaflet.css'
 import '@supermap/iclient-leaflet'
 import L from "leaflet";
+import baseUrl from'@/assets/js/baseUrl.js'
 Vue.use(L);
 Vue.use(ElementUI, {
   size: 'small'
@@ -26,6 +27,7 @@ Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 Vue.prototype.$EventBus = new Vue()
 Vue.prototype.$utils = utils
+Vue.prototype.$api = baseUrl.BASEDEV
 
 //路由守卫(判断是否登录)
 router.beforeEach((to, from, next) => {

@@ -23,6 +23,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$api,"this.$api")
     alert("404 mounted.............");
   }
 };
