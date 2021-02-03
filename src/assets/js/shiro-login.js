@@ -9,6 +9,8 @@
  axios.defaults.withCredentials = true
  axios.defaults.crossDomain = true
 
+//  拦截器
+//  所有请求的返回response统一处理
  axios.interceptors.response.use(
    response => response,
    error => {
