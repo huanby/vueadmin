@@ -7,15 +7,16 @@
 </template>
 <script>
 export default {
-  name: "swagger",
+  name: "formDesign",
   data() {
     return {
-      src: "http://127.0.0.1:8089/swagger-ui.html#/"
+      src: "http://127.0.0.1:9998"
     };
-  }
+  },
+  methods: {},
+  components: {}
 };
 </script>
-
 <style scoped>
 .trend-container2 {
   position: relative;

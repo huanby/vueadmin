@@ -94,9 +94,21 @@ export default {
             {
               index: "swagger",
               title: "swagger文档"
-            }         
+            }
           ]
         },
+        //开发者工具
+        {
+          icon: "el-icon-question",
+          index: "developerTools",
+          title: "开发者工具",
+          subs: [
+            {
+              index: "formDesign",
+              title: "页面表格设计"
+            }
+          ]
+        }
         //系统管理
         // {
         //   icon: "el-icon-question",

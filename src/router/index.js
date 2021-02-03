@@ -2,8 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/dashboard'
   },
@@ -173,6 +172,16 @@ const routes = [
         component: resolve => require(['../views/monitor/Swagger.vue'], resolve),
         meta: {
           title: 'swagger文档',
+          requireAuth: true
+        }
+      },
+      //开发者工具
+      {
+        path: '/formDesign',
+        name: 'formDesign',
+        component: resolve => require(['../views/developerTools/FormDesign.vue'], resolve),
+        meta: {
+          title: '页面表格设计',
           requireAuth: true
         }
       },

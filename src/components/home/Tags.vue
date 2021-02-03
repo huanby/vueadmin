@@ -1,6 +1,6 @@
 <template>
   <div class="tags" v-if="showTags">
-    <div class="tags-cont">
+    <!-- <div class="tags-cont">
       <i class="el-icon-d-arrow-left" style="width:20px;line-height: 40px;margin-left: 10px"></i>
       <el-scrollbar
         ref="scrollContainer"
@@ -23,10 +23,33 @@
         </ul>
       </el-scrollbar>
       <i class="el-icon-d-arrow-right" style="width:20px;line-height: 40px;"></i>
-    </div>
+    </div> -->
+    <ul>
+      <li
+        class="tags-li"
+        v-for="(item, index) in tagsList"
+        :class="{ active: isActive(item.path) }"
+        :key="index"
+      >
+        <router-link :to="item.path" class="tags-li-title">{{
+          item.title
+        }}</router-link>
+        <span
+          v-show="item.path != '/dashboard'"
+          class="tags-li-icon"
+          @click="closeTags(index)"
+        >
+          <i class="el-icon-close"></i>
+        </span>
+      </li>
+    </ul>
     <div class="tags-close-box">
       <el-dropdown @command="handleTags">
-        <el-button class="mbtn" type="primary" style="background-color: #009688;">
+        <el-button
+          class="mbtn"
+          type="primary"
+          style="background-color: #009688"
+        >
           标签选项
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -43,7 +66,7 @@
 export default {
   data() {
     return {
-      tagsList: []
+      tagsList: [],
     };
   },
   methods: {
@@ -67,7 +90,7 @@ export default {
     closeAll() {
       // this.tagsList = [];
       // this.$router.push("/");
-      const curItem = this.tagsList.filter(item => {
+      const curItem = this.tagsList.filter((item) => {
         return item.path == "/dashboard";
       });
       this.tagsList = curItem;
@@ -75,14 +98,14 @@ export default {
     },
     // 关闭其他标签
     closeOther() {
-      const curItem = this.tagsList.filter(item => {
+      const curItem = this.tagsList.filter((item) => {
         return item.path === this.$route.fullPath || item.path == "/dashboard";
       });
       this.tagsList = curItem;
     },
     // 设置标签
     setTags(route) {
-      const isExist = this.tagsList.some(item => {
+      const isExist = this.tagsList.some((item) => {
         return item.path === route.fullPath;
       });
       if (!isExist) {
@@ -93,16 +116,16 @@ export default {
           title: route.meta.title,
           path: route.fullPath,
           // name: route.matched[1].components.default.name
-          name: route.name
+          name: route.name,
         });
       }
       // F5刷新路由 判断是否存在首页
-      var tagsList_ = this.tagsList.filter(e => e.name == "dashboard");
+      var tagsList_ = this.tagsList.filter((e) => e.name == "dashboard");
       if (tagsList_.length == 0) {
         tagsList_.push({
           path: "/dashboard",
           name: "dashboard",
-          title: "首页"
+          title: "首页",
         });
         this.tagsList = tagsList_.concat(this.tagsList);
       }
@@ -151,21 +174,21 @@ export default {
     },
     scrollWrapper() {
       return this.$refs.scrollContainer.$refs.wrap;
-    }
+    },
   },
   watch: {
     $route(newValue, oldValue) {
       this.setTags(newValue);
-    }
+    },
   },
   created() {
     this.setTags(this.$route);
-  }
+  },
 };
 </script>
 
 
-<style>
+<style scoped>
 .tags {
   position: relative;
   height: 40px;
@@ -179,7 +202,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
   /* overflow: hidden; */
-  margin-left: 20px;
+  margin-left: 10px;
   width: 100%;
   height: 100%;
 }
@@ -250,8 +273,4 @@ export default {
   height: 40px;
 }
 </style>
-<style>
-.el-scrollbar__wrap {
-  overflow-x: hidden;
-}
-</style>
+
