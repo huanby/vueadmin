@@ -106,6 +106,10 @@ export default {
             {
               index: "formDesign",
               title: "页面表格设计"
+            },
+             {
+              index: "generator",
+              title: "代码生成工具"
             }
           ]
         }

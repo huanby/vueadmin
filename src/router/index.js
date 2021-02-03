@@ -185,6 +185,15 @@ const routes = [{
           requireAuth: true
         }
       },
+      {
+        path: '/generator',
+        name: 'generator',
+        component: resolve => require(['../views/developerTools/Generator.vue'], resolve),
+        meta: {
+          title: '代码生成工具',
+          requireAuth: true
+        }
+      },
     ]
   }
 ]

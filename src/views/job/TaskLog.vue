@@ -85,6 +85,7 @@
             </el-table-column>
           </el-table>
           <el-pagination
+            background
             style="float:right"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -242,7 +243,7 @@ export default {
           this.$axios
             .get("http://127.0.0.1:8089/joblog/delete", {
               params: {
-                id:row.logId
+                id: row.logId
               }
             })
             .then(res => {
