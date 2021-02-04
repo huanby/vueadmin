@@ -141,8 +141,30 @@ export default {
           this.loading = false;
         });
     },
-    handleDownload(row){
-        window.location.href = "http://127.0.0.1:8089/generator"+"?name="+row.name+"&remark="+row.remark
+    handleDownload(row) {
+      this.$confirm(
+        "确定生成数据表 " + row.name + " 对应的前后端代码？",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          window.location.href =
+            "http://127.0.0.1:8089/generator" +
+            "?name=" +
+            row.name +
+            "&remark=" +
+            row.remark;
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   computed: {

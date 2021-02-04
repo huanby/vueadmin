@@ -194,6 +194,15 @@ const routes = [{
           requireAuth: true
         }
       },
+      {
+        path: '/paramsConfig',
+        name: 'paramsConfig',
+        component: resolve => require(['../views/developerTools/ParamsConfig.vue'], resolve),
+        meta: {
+          title: '参数配置',
+          requireAuth: true
+        }
+      },
     ]
   }
 ]

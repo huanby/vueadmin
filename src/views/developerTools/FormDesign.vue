@@ -10,7 +10,7 @@ export default {
   name: "formDesign",
   data() {
     return {
-      src: "http://127.0.0.1:9998"
+      src: "http://112.125.126.80:9998/"
     };
   },
   methods: {},
