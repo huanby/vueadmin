@@ -19,14 +19,15 @@
               <el-form-item>
                 <el-button type="primary" @click="list">查询</el-button>
                 <el-button type="success" @click="insertFormVisible = true">新增</el-button>
-                <el-button type="warning">修改</el-button>
-                <el-button type="danger">删除</el-button>
+                <!-- <el-button type="warning">修改</el-button> -->
+                <!-- <el-button type="danger">删除</el-button> -->
               </el-form-item>
             </el-form>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div>
             <el-table :data="tableData" style="width: 100%">
+              <el-table-column type="selection" width="55"></el-table-column>
               <el-table-column v-if="false" prop="id" label="id"></el-table-column>
               <el-table-column prop="username" label="用户名"></el-table-column>
               <el-table-column prop="name" label="姓名"></el-table-column>
@@ -105,7 +106,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="insertFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="add">确 定</el-button>
+        <el-button type="primary" @click="addOrUpdate">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 新增用户表单dialog end -->
@@ -154,6 +155,8 @@ export default {
       },
       // gridData: [],
       // dialogTableVisible: false,
+      // isInsert判断是添加还是修改
+      isInsert: true,
       insertFormVisible: false,
       addForm: {
         username: "",
@@ -191,6 +194,8 @@ export default {
     list() {
       this.$axios
         .get("http://127.0.0.1:8089/sys/user/list", {
+          // this.$baseUrl 获取baseUrl.BASEURL 全局变量
+          // .get(baseUrl + "/sys/user/list", {
           params: {
             currentPage: this.pagination.currentPage,
             pageSize: this.pagination.pageSize,
@@ -207,7 +212,14 @@ export default {
           console.log(err);
         });
     },
-    // 新增用户
+    // 新增/修改用户
+    addOrUpdate() {
+      if (this.isInsert) {
+        this.add();
+      } else {
+        this.update();
+      }
+    },
     add() {
       // 值拷贝
       let params = JSON.parse(JSON.stringify(this.addForm));
@@ -232,15 +244,81 @@ export default {
           console.log(err);
         });
     },
+    update() {
+      // 值拷贝
+      let params = JSON.parse(JSON.stringify(this.addForm));
+      // alert(this.validate());
+      this.$axios({
+        method: "post",
+        url: "http://127.0.0.1:8089/sys/user/update",
+        data: params
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.status == 200) {
+            this.$message({
+              message: "操作成功！",
+              type: "success"
+            });
+            // 隐藏添加框
+            this.insertFormVisible = false;
+            this.isInsert = true;
+            this.list();
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     // 修改用户
     handleEdit(row) {
-      // this.isInsert = false;
+      this.isInsert = false;
       this.addForm = JSON.parse(JSON.stringify(row));
+      // :visible.sync="insertFormVisible" 展示用户信息添加框
       this.insertFormVisible = true;
     },
     // update() {},
     // 删除用户
-    delete() {}
+    handleDelete(row) {
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          alert(row.id);
+          this.$axios
+            .get("http://127.0.0.1:8089/sys/user/delete", {
+              params: {
+                id: row.id
+              }
+            })
+            .then(res => {
+              // console.log(res);
+              if (res.data.status == 200) {
+                this.$message({
+                  message: "操作成功！",
+                  type: "success"
+                });
+                this.list();
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      // this.isInsert = false;
+      // this.addForm = JSON.parse(JSON.stringify(row));
+      // :visible.sync="insertFormVisible" 展示用户信息添加框
+      // this.insertFormVisible = true;
+    }
+    // delete() {}
     //
   },
   filters: {
