@@ -116,6 +116,62 @@ export default {
               title: "参数配置"
             }
           ]
+        },
+        //模块功能
+        {
+          icon: "el-icon-question",
+          index: "module",
+          title: "模块功能",
+          subs: [
+            {
+              index: "map",
+              title: "地图",
+              subs: [
+                {
+                  index: "superMap",
+                  title: "超图"
+                },
+                {
+                  index: "gooleMap",
+                  title: "谷歌地图"
+                },
+                {
+                  index: "aMap",
+                  title: "高德地图"
+                },
+                {
+                  index: "baiduMap",
+                  title: "百度地图"
+                }
+              ]
+            },
+            {
+              index: "char",
+              title: "图表",
+              subs: [
+                {
+                  index: "lineChar",
+                  title: "线图"
+                },
+                {
+                  index: "cakeChar",
+                  title: "饼状图"
+                },
+                {
+                  index: "columnChar",
+                  title: "柱状图"
+                },
+                {
+                  index: "areaChar",
+                  title: "面积图"
+                },
+                {
+                  index: "scatter",
+                  title: "散点图"
+                }
+              ]
+            }
+          ]
         }
         //系统管理
         // {

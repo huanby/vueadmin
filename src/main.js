@@ -11,7 +11,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import "./assets/icon/iconfont.css"; //引入阿里巴巴矢量图标库
 
 import 'leaflet/dist/leaflet.css'
-import '@supermap/iclient-leaflet'
 import L from "leaflet";
 import baseUrl from'@/assets/js/baseUrl.js'
 import './assets/js/shiro-login.js'

@@ -1,46 +1,21 @@
 <template>
-  <div id="map" style="width:100%;height:100%"></div>
+  <el-container style="height:99%">
+    <el-main style="padding: 10px;">
+      <el-card class="box-card" style="height:99%">
+        <span style="font-weight:bold">项目介绍</span>
+      </el-card>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
 export default {
   name: "dashboard",
   data: function() {
-    return {
-      map: null
-    };
+    return {};
   },
-  methods: {
-    initMap() {
-      //   let url = 'https://iserver.supermap.io/iserver/services/map-china400/rest/maps/China';
-      //   let map = L.map("map", {
-      //   center : [ 40, 100 ], // 中心点
-      // 	maxZoom : 10,
-      // 	zoom : 4,
-      //     // zoomControl : false
-      //   });
-      //   this.map = map; //data上需要挂载
-      // //   window.map = map;
-      // L.supermap.tiledMapLayer(url).addTo(map);
-      let map = L.map("map", {
-        minZoom: 3,
-        maxZoom: 14,
-        center: [40, 120],
-        zoom: 6,
-        zoomControl: false,
-        attributionControl: false,
-        crs: L.CRS.EPSG3857
-      });
-      this.map = map; //data上需要挂载
-      window.map = map;
-      L.tileLayer(
-        "http://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}"
-      ).addTo(map);
-    }
-  },
-  mounted() {
-    this.initMap();
-  },
+  methods: {},
+  mounted() {}
 };
 </script>
 <style>

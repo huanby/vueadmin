@@ -101,7 +101,7 @@
     </el-container>
 
     <!---新增/修改弹窗--->
-    <el-dialog title="收货地址" :visible.sync="insertOrUpdateFormVisible">
+    <el-dialog title="定时任务" :visible.sync="insertOrUpdateFormVisible">
       <el-form :model="insertOrUpdateform" :rules="rules" ref="ruleForm">
         <el-form-item label="bean名称" prop="beanName" :label-width="formLabelWidth">
           <el-input v-model="insertOrUpdateform.beanName"></el-input>

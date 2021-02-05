@@ -203,6 +203,88 @@ const routes = [{
           requireAuth: true
         }
       },
+      // 模块功能
+      {
+        path: '/superMap',
+        name: 'superMap',
+        component: resolve => require(['../views/module/map/SuperMap.vue'], resolve),
+        meta: {
+          title: '超图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/gooleMap',
+        name: 'gooleMap',
+        component: resolve => require(['../views/module/map/GooleMap.vue'], resolve),
+        meta: {
+          title: '谷歌地图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/aMap',
+        name: 'aMap',
+        component: resolve => require(['../views/module/map/AMap.vue'], resolve),
+        meta: {
+          title: '高德地图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/baiduMap',
+        name: 'baiduMap',
+        component: resolve => require(['../views/module/map/BaiduMap.vue'], resolve),
+        meta: {
+          title: '百度地图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/areaChar',
+        name: 'areaChar',
+        component: resolve => require(['../views/module/charts/AreaChar.vue'], resolve),
+        meta: {
+          title: '面积图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/cakeChar',
+        name: 'cakeChar',
+        component: resolve => require(['../views/module/charts/CakeChar.vue'], resolve),
+        meta: {
+          title: '饼状图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/lineChar',
+        name: 'lineChar',
+        component: resolve => require(['../views/module/charts/LineChar.vue'], resolve),
+        meta: {
+          title: '线图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/columnChar',
+        name: 'columnChar',
+        component: resolve => require(['../views/module/charts/ColumnChar.vue'], resolve),
+        meta: {
+          title: '柱状图',
+          requireAuth: true
+        }
+      },
+      {
+        path: '/scatter',
+        name: 'scatter',
+        component: resolve => require(['../views/module/charts/Scatter.vue'], resolve),
+        meta: {
+          title: '散点图',
+          requireAuth: true
+        }
+      },
     ]
   }
 ]
