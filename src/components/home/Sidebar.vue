@@ -16,11 +16,11 @@
           <el-submenu :index="item.index+''" :key="item.index">
             <template slot="title">
               <i :class="item.icon"></i>
-              <span slot="title">{{ item.title }}</span>
+              <span slot="title">&emsp;{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.subs">
               <el-submenu v-if="subItem.subs" :index="subItem.index+''" :key="subItem.index">
-                <template slot="title">{{ subItem.title }}</template>
+                <template slot="title"><i :class="subItem.icon"></i>{{ subItem.title }}</template>
                 <el-menu-item
                   v-for="(threeItem,i) in subItem.subs"
                   :key="i"
@@ -51,12 +51,12 @@ export default {
       menuItems: [],
       items: [
         {
-          icon: "iconfont emoji_fill",
+          icon: "iconfont homepage_fill",
           index: "dashboard",
           title: "系统首页"
         },
         {
-          icon: "el-icon-info",
+          icon: "iconfont warning_fill",
           index: "error",
           title: "错误页面",
           subs: [
@@ -71,7 +71,7 @@ export default {
           ]
         },
         {
-          icon: "el-icon-question",
+          icon: "iconfont message_fill",
           index: "form",
           title: "测试页面",
           subs: [
@@ -87,7 +87,7 @@ export default {
         },
         // 系统监控
         {
-          icon: "el-icon-question",
+          icon: "iconfont computer_fill",
           index: "monitor",
           title: "系统监控",
           subs: [
@@ -99,7 +99,7 @@ export default {
         },
         //开发者工具
         {
-          icon: "el-icon-question",
+          icon: "iconfont decoration_fill",
           index: "developerTools",
           title: "开发者工具",
           subs: [
@@ -119,13 +119,14 @@ export default {
         },
         //模块功能
         {
-          icon: "el-icon-question",
+          icon: "iconfont qrcode_fill",
           index: "module",
           title: "模块功能",
           subs: [
             {
               index: "map",
               title: "地图",
+              icon: "iconfont coordinates_fill",
               subs: [
                 {
                   index: "superMap",
@@ -148,6 +149,7 @@ export default {
             {
               index: "char",
               title: "图表",
+              icon: "iconfont dynamic_fill",
               subs: [
                 {
                   index: "lineChar",
@@ -287,7 +289,7 @@ export default {
 .sidebar > ul {
   height: 100%;
 }
-/* .iconfont {
+.iconfont {
   font-size: 25px;
-} */
+}
 </style>
