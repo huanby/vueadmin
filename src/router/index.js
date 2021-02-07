@@ -175,6 +175,15 @@ const routes = [{
           requireAuth: true
         }
       },
+      {
+        path: '/druid',
+        name: 'druid',
+        component: resolve => require(['../views/monitor/Druid.vue'], resolve),
+        meta: {
+          title: 'druid监控',
+          requireAuth: true
+        }
+      },
       //开发者工具
       {
         path: '/formDesign',

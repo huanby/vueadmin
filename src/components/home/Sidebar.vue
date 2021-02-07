@@ -94,6 +94,10 @@ export default {
             {
               index: "swagger",
               title: "swagger文档"
+            },
+            {
+              index: "druid",
+              title: "druid监控"
             }
           ]
         },

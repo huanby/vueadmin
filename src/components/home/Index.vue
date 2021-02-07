@@ -74,8 +74,6 @@ export default {
 .content {
   width: auto;
   height: 100%;
-  /* padding: 5px; */
-  overflow-y: auto;
   box-sizing: border-box;
 }
 

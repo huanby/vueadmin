@@ -20,7 +20,7 @@ export default {
 .trend-container2 {
   position: relative;
   width: 100%;
-  min-height: 700px;
+  min-height: 650px;
   padding-bottom: 16px;
 }
 </style>
