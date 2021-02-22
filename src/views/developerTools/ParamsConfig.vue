@@ -194,7 +194,7 @@ export default {
   methods: {
     selectInfo() {
       this.$axios
-        .get("http://127.0.0.1:8089/generatorConfig/list", {
+        .get(this.$api+"generatorConfig/list", {
           params: {}
         })
         .then(res => {
@@ -214,7 +214,7 @@ export default {
         if (valid) {
           this.form["id"] = this.config.id;
           this.$axios
-            .get("http://127.0.0.1:8089/generatorConfig/save", {
+            .get(this.$api+"generatorConfig/save", {
               params: this.form
             })
             .then(res => {

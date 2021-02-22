@@ -94,8 +94,9 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
+      console.log(this.$api,"this is api port")
       this.$axios
-        .get("http://127.0.0.1:8089/login", {
+        .get(this.$api+"login", {
           params: {
             username: this.username,
             password: this.password

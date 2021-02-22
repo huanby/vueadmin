@@ -214,7 +214,7 @@ export default {
     },
     selectJobInfos() {
       this.$axios
-        .get("http://127.0.0.1:8089/job/list", {
+        .get(this.$api+"job/list", {
           params: {
             pageSize: this.pagination.pageSize,
             currentPage: this.pagination.currentPage,
@@ -249,7 +249,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .post("http://127.0.0.1:8089/job/batchDelete", {
+            .post(this.$api+"job/batchDelete", {
               list: JSON.stringify(this.multipleSelection)
             })
             .then(res => {
@@ -288,7 +288,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .get("http://127.0.0.1:8089/job/delete", {
+            .get(this.$api+"job/delete", {
               params: row
             })
             .then(res => {
@@ -323,7 +323,7 @@ export default {
         return;
       }
       this.$axios
-        .post("http://127.0.0.1:8089/job/pauseJob", {
+        .post(this.$api+"job/pauseJob", {
           list: JSON.stringify(this.multipleSelection)
         })
         .then(res => {
@@ -351,7 +351,7 @@ export default {
         return;
       }
       this.$axios
-        .post("http://127.0.0.1:8089/job/resumeJob", {
+        .post(this.$api+"job/resumeJob", {
           list: JSON.stringify(this.multipleSelection)
         })
         .then(res => {
@@ -379,7 +379,7 @@ export default {
       // alert(this.validate());
       if (this.isInsert) {
         this.$axios
-          .get("http://127.0.0.1:8089/job/add", {
+          .get(this.$api+"job/add", {
             params: params
           })
           .then(res => {
@@ -397,7 +397,7 @@ export default {
           });
       } else {
         this.$axios
-          .get("http://127.0.0.1:8089/job/update", {
+          .get(this.$api+"job/update", {
             params: params
           })
           .then(res => {

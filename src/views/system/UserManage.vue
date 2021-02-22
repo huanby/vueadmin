@@ -193,7 +193,7 @@ export default {
     // 分页获取用户信息列表
     list() {
       this.$axios
-        .get("http://127.0.0.1:8089/sys/user/list", {
+        .get(this.$api+"sys/user/list", {
           // this.$baseUrl 获取baseUrl.BASEURL 全局变量
           // .get(baseUrl + "/sys/user/list", {
           params: {
@@ -225,7 +225,7 @@ export default {
       let params = JSON.parse(JSON.stringify(this.addForm));
       // alert(this.validate());
       this.$axios
-        .get("http://127.0.0.1:8089/sys/user/add", {
+        .get(this.$api+"sys/user/add", {
           params: params
         })
         .then(res => {
@@ -250,7 +250,7 @@ export default {
       // alert(this.validate());
       this.$axios({
         method: "post",
-        url: "http://127.0.0.1:8089/sys/user/update",
+        url: this.$api+"sys/user/update",
         data: params
       })
         .then(res => {
@@ -288,7 +288,7 @@ export default {
         .then(() => {
           alert(row.id);
           this.$axios
-            .get("http://127.0.0.1:8089/sys/user/delete", {
+            .get(this.$api+"sys/user/delete", {
               params: {
                 id: row.id
               }

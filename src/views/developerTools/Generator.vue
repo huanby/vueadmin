@@ -124,7 +124,7 @@ export default {
     selectInfos() {
       this.loading = true;
       this.$axios
-        .get("http://127.0.0.1:8089/generator/tables/info", {
+        .get(this.$api+"generator/tables/info", {
           params: {
             pageSize: this.pagination.pageSize,
             currentPage: this.pagination.currentPage,
@@ -153,7 +153,7 @@ export default {
       )
         .then(() => {
           window.location.href =
-            "http://127.0.0.1:8089/generator" +
+            this.$api+"/generator" +
             "?name=" +
             row.name +
             "&remark=" +

@@ -168,7 +168,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .post("http://127.0.0.1:8089/joblog/batchDelete", {
+            .post(this.$api+"joblog/batchDelete", {
               ids: JSON.stringify(ids)
             })
             .then(res => {
@@ -211,7 +211,7 @@ export default {
     selectJobLogInfos() {
       this.loading = true;
       this.$axios
-        .get("http://127.0.0.1:8089/joblog/list", {
+        .get(this.$api+"joblog/list", {
           params: {
             pageSize: this.pagination.pageSize,
             currentPage: this.pagination.currentPage,
@@ -241,7 +241,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .get("http://127.0.0.1:8089/joblog/delete", {
+            .get(this.$api+"joblog/delete", {
               params: {
                 id: row.logId
               }

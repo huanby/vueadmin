@@ -10,7 +10,7 @@ export default {
   name: "swagger",
   data() {
     return {
-      src: "http://127.0.0.1:8089/druid/sql.html"
+      src: this.$api+"druid/sql.html"
     };
   }
 };

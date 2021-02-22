@@ -147,7 +147,7 @@ export default {
     // 分页获取角色信息列表
     list() {
       this.$axios
-        .get("http://127.0.0.1:8089/sys/role/list", {
+        .get(this.$api+"sys/role/list", {
           params: {
             currentPage: this.pagination.currentPage,
             pageSize: this.pagination.pageSize,
@@ -185,7 +185,7 @@ export default {
       let params = JSON.parse(JSON.stringify(this.roleForm));
       // alert(this.validate());
       this.$axios
-        .get("http://127.0.0.1:8089/sys/role/add", {
+        .get(this.$api+"sys/role/add", {
           params: params
         })
         .then(res => {
@@ -211,7 +211,7 @@ export default {
       // alert(this.validate());
       this.$axios({
         method: "post",
-        url: "http://127.0.0.1:8089/sys/role/update",
+        url: this.$api+"sys/role/update",
         data: params
       })
         .then(res => {
@@ -241,7 +241,7 @@ export default {
         .then(() => {
           // alert(row.id);
           this.$axios
-            .get("http://127.0.0.1:8089/sys/role/delete", {
+            .get(this.$api+"sys/role/delete", {
               params: {
                 id: row.id
               }

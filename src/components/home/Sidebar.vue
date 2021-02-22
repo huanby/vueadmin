@@ -236,7 +236,7 @@ export default {
   mounted() {
     // 请求首页展示数据
     this.$axios
-      .post("http://127.0.0.1:8089/index")
+      .post(this.$api+"index")
       .then(res => {
         console.log("success");
         console.log(res.data);

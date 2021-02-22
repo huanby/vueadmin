@@ -18,7 +18,8 @@ Vue.use(L);
 Vue.use(ElementUI, {
   size: 'small'
 });
-axios.defaults.withCredentials = true;
+ axios.defaults.withCredentials = true
+ axios.defaults.crossDomain = true
 //设置请求头
 axios.defaults.headers.post["Content-type"] = "application/json;charset=UTF-8"
 // 全局属性
