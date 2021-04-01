@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="background">
-      <img :src="imgSrc" width="100%" height="100%" alt>
+      <img :src="imgSrc" width="100%" height="100%" alt />
     </div>
     <div>
       <!-- 页面主体START -->
       <section id="main">
         <div class="user-avator">
-          <img src="../../assets/imgs/user.gif">
+          <img src="../../assets/imgs/user.gif" />
         </div>
         <h2 class="denglu">GALE权限管理</h2>
         <form accept-charset="utf-8" data-view="loginView">
@@ -28,8 +28,10 @@
               }}
             </span>
           </div>
-
+          <div class="clearfix" style="height:5px;"></div>
           <div class="clearfix">
+             <!-- @change="alert(checked)" -->
+            <el-checkbox v-model="checked" class="font-16 text-green hk-cursor">记住密码</el-checkbox>
             <a href="javascript:;" class="forgot_pwd">忘记密码？</a>
           </div>
           <div class="clearfix btn_login" data-propertyname="submit" data-controltype="Botton">
@@ -46,6 +48,7 @@
   </div>
 </template>
 <script>
+let Base64 = require("js-base64").Base64;
 export default {
   data() {
     return {
@@ -55,7 +58,8 @@ export default {
       usernameWarn: false,
       passwordWarn: false,
       password: "",
-      passwordMessage: ""
+      passwordMessage: "",
+      checked: false
     };
   },
   watch: {
@@ -82,10 +86,26 @@ export default {
         this.passwordMessage = "请输入密码";
         return;
       }
+
       let data = {
         username: this.username,
         password: this.password
       };
+
+      let accountInfo = "";
+      let newaccount = Base64.encode(this.username);
+      let newPassord = Base64.encode(this.password);
+      if (this.checked == true) {
+        console.log("选择记住密码", this.checked == true);
+        // 将加密后的密码存入cookie对象中
+        accountInfo = newaccount + "&" + newPassord;
+        // 传入账户和密码，保存5天
+        this.setCookie("accountInfo", accountInfo, 1440 * 5);
+      } else {
+        console.log("清空cookie");
+        // 清空Cookie
+        this.delCookie("accountInfo");
+      }
       // this.$axios
       //   .post("/api/login", this.$qs.stringify(data))
       //   .then(res => {
@@ -94,9 +114,9 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
-      console.log(this.$api,"this is api port")
+      console.log(this.$api, "this is api port");
       this.$axios
-        .get(this.$api+"login", {
+        .get(this.$api + "login", {
           params: {
             username: this.username,
             password: this.password
@@ -125,7 +145,92 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    /* 记住密码 */
+    // alert(checked) {
+    // alert(checked);
+    // },
+    // 记住密码读取信息
+    getCookie(cookieName) {
+      if (document.cookie.length > 0) {
+        var c_start = document.cookie.indexOf(cookieName + "=");
+        if (c_start != -1) {
+          c_start = c_start + cookieName.length + 1;
+          var c_end = document.cookie.indexOf(";", c_start);
+          if (c_end == -1) c_end = document.cookie.length;
+          return unescape(document.cookie.substring(c_start, c_end));
+        }
+      }
+      return "";
+    },
+    // 设置cookie
+    setCookie(key, data, time) {
+      if (!key) {
+        return;
+      }
+      // let expires = "Tue, 19 Jan 2038 03:14:07 GMT";
+      let expires = new Date().toGMTString;
+      if (time) {
+        let date;
+        // if (this.isType(time, "Date")) {
+        if (time < 0) {
+          date = new Date();
+        } else {
+          date = new Date();
+          date.setTime(date.getTime() + time * 60000);
+        }
+        expires = date.toGMTString();
+      }
+
+      data = JSON.stringify(data);
+      document.cookie =
+        escape(key) + "=" + escape(data) + "; expires=" + expires + "; path=/";
+      // doc.cookie =
+      // escape(key) + "=" + escape(data) + "; expires=" + expires + "; path=/";
+    },
+    //删除cookie
+    delCookie(c_name) {
+      this.setCookie(c_name, undefined, -1);
+    },
+    // isType(time, date) {
+    //   if ("Date" == date) {
+    //     time = new Date().getTime + time * 60000;
+    //     return time;
+    //   }
+    // },
+    // 预读取cookie中用户信息
+    loadAccountInfo() {
+      let self = this;
+      // admin%26U2FsdGVkX1+/ZtAGWFVi37gNwA7TUZmQM+yazInCPxs%3D
+      let accountInfo = this.getCookie("accountInfo");
+      console.log(accountInfo);
+      // 如果cookie里没有账号信息
+      if (Boolean(accountInfo) == false) {
+        console.log("cookie中没有检测到用户账号信息！");
+        return false;
+      } else {
+        // 如果cookie里有账号信息
+        console.log("cookie中检测到账号信息！现在开始预填写！");
+        let userName = "";
+        let passWord = "";
+        let index = accountInfo.indexOf("&");
+        console.log(accountInfo);
+        userName = accountInfo.substring(0, index);
+        passWord = accountInfo.substring(index + 1); // 拿到加密后的密码
+        // 解密
+        // var bytes = Base64.decode(passWord)
+        // 拿到解密后的密码（登录时输入的密码）
+        this.username = Base64.decode(userName);
+        this.password = Base64.decode(passWord);
+        this.checked = true;
+      }
     }
+    /* 记住密码 */
+  },
+  //自动执行
+  mounted() {
+    //预读取cookie中用户信息
+    this.loadAccountInfo();
   }
 };
 </script>
