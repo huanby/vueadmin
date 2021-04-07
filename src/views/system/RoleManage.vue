@@ -92,6 +92,21 @@
             <el-option label="禁用" :value="0"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="角色" :label-width="formLabelWidth">
+          <el-select v-model="roleSelect" multiple placeholder="请选择" @change="roleSelectChange">
+            <!-- option展开高度太小，把height设置为auto -->
+            <el-option :value="selectOptions" style="height: auto">
+              <el-tree
+                :data="data"
+                show-checkbox
+                node-key="id"
+                :default-expanded-keys="[2, 3]"
+                :default-checked-keys="[5]"
+                :props="defaultProps"
+              ></el-tree>
+            </el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="roleFormVisible = false">取 消</el-button>
@@ -127,7 +142,65 @@ export default {
         remark: "",
         enable: 1
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      //role 角色列表选择器Select
+      selectOptions: [],
+      roleSelect: [],
+      // role角色树形列表
+      data: [
+        {
+          id: 1,
+          label: "一级 1",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: "一级 2",
+          children: [
+            {
+              id: 5,
+              label: "二级 2-1"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: "一级 3",
+          children: [
+            {
+              id: 7,
+              label: "二级 3-1"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
+        }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   mounted() {
@@ -266,6 +339,34 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    //角色select框值改变时候触发的事件
+    roleSelectChange(e) {
+      var arrNew = [];
+      var dataLength = this.selectOptions.length;
+      var eleng = e.length;
+      for (let i = 0; i < dataLength; i++) {
+        for (let j = 0; j < eleng; j++) {
+          if (e[j] === this.selectOptions[i].label) {
+            arrNew.push(this.selectOptions[i]);
+          }
+        }
+      }
+      this.$refs.tree.setCheckedNodes(arrNew); //设置勾选的值
+    },
+    //role角色列表选中事件
+    handleCheckChange() {
+      let res = this.$refs.tree.getCheckedNodes(true, true); //这里两个true，1. 是否只是叶子节点 2. 是否包含半选节点（就是使得选择的时候不包含父节点）
+      let arrLabel = [];
+      let arr = [];
+      res.forEach(item => {
+        arrLabel.push(item.label);
+        arr.push(item);
+      });
+      this.selectOptions = arr;
+      this.roleSelect = arrLabel;
+      console.log("arr:" + JSON.stringify(arr));
+      console.log("arrLabel:" + arrLabel);
     }
   },
   filters: {

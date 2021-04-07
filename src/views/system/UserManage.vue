@@ -12,13 +12,13 @@
               </el-form-item>
               <el-form-item label="状态">
                 <el-select v-model="queryForm.enable" placeholder="状态">
-                  <el-option label="启用" value="1"></el-option>
-                  <el-option label="停用" value="0"></el-option>
+                  <el-option label="启用" :value="1"></el-option>
+                  <el-option label="停用" :value="0"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="list">查询</el-button>
-                <el-button type="success" @click="insertFormVisible = true">新增</el-button>
+                <el-button type="success" @click="insertFormVisible = true;getRoleList()">新增</el-button>
                 <!-- <el-button type="warning">修改</el-button> -->
                 <!-- <el-button type="danger">删除</el-button> -->
               </el-form-item>
@@ -103,6 +103,16 @@
             <el-option label="禁用" :value="0"></el-option>
           </el-select>
         </el-form-item>
+        <!-- <el-form-item label="角色" :label-width="formLabelWidth">
+          <el-select v-model="addForm.roles" multiple placeholder="请选择">
+            <el-option
+              v-for="item in selectOptions"
+              :key="item.id"
+              :label="item.rolename"
+              :value="item.rolesign"
+            ></el-option>
+          </el-select>
+        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="insertFormVisible = false">取 消</el-button>
@@ -121,6 +131,7 @@ export default {
   name: "userManage",
   data() {
     return {
+      // tableData
       tableData: [
         {
           date: "2016-05-02",
@@ -143,10 +154,12 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
+      // queryForm
       queryForm: {
         username: "",
         region: ""
       },
+      // pagination
       pagination: {
         currentPage: 1,
         total: 0,
@@ -158,6 +171,7 @@ export default {
       // isInsert判断是添加还是修改
       isInsert: true,
       insertFormVisible: false,
+      // addForm
       addForm: {
         username: "",
         name: "",
@@ -165,7 +179,8 @@ export default {
         age: "",
         tel: "",
         mail: "",
-        enable: "1"
+        enable: 1
+        // enable: "启用"
         // date1: "",
         // date2: "",
         // delivery: false,
@@ -173,18 +188,100 @@ export default {
         // resource: "",
         // desc: ""
       },
-      formLabelWidth: "120px"
+      // formLabelWidth 表单宽度
+      formLabelWidth: "120px",
+      //role 角色列表选择器Select
+      selectOptions: [
+        // {
+        //   value: "选项1",
+        //   label: "黄金糕"
+        // },
+        // {
+        //   value: "选项2",
+        //   label: "双皮奶"
+        // },
+        // {
+        //   value: "选项3",
+        //   label: "蚵仔煎"
+        // },
+        // {
+        //   value: "选项4",
+        //   label: "龙须面"
+        // },
+        // {
+        //   value: "选项5",
+        //   label: "北京烤鸭"
+        // }
+      ],
+      roles: [],
+      // role角色树形列表
+      data: [
+        {
+          id: 1,
+          label: "一级 1",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: "一级 2",
+          children: [
+            {
+              id: 5,
+              label: "二级 2-1"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: "一级 3",
+          children: [
+            {
+              id: 7,
+              label: "二级 3-1"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
+        }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   mounted() {
     this.list();
   },
   methods: {
+    //分页
     handleSizeChange(val) {
       this.pagination.pageSize = val;
       this.list();
       console.log(`每页 ${val} 条`);
     },
+    //当前页
     handleCurrentChange(val) {
       this.pagination.currentPage = val;
       this.list();
@@ -193,7 +290,7 @@ export default {
     // 分页获取用户信息列表
     list() {
       this.$axios
-        .get(this.$api+"sys/user/list", {
+        .get(this.$api + "sys/user/list", {
           // this.$baseUrl 获取baseUrl.BASEURL 全局变量
           // .get(baseUrl + "/sys/user/list", {
           params: {
@@ -212,21 +309,29 @@ export default {
           console.log(err);
         });
     },
-    // 新增/修改用户
+    // 判断表单提交 新增/修改用户
     addOrUpdate() {
       if (this.isInsert) {
+        //添加用户
         this.add();
       } else {
+        //修改用户
         this.update();
       }
     },
+    //添加用户
     add() {
       // 值拷贝
       let params = JSON.parse(JSON.stringify(this.addForm));
       // alert(this.validate());
       this.$axios
-        .get(this.$api+"sys/user/add", {
-          params: params
+        // .post(this.$api + "sys/user/addUser", {
+        //   user: JSON.stringify(this.addForm)
+        // })
+        .post(this.$api + "sys/user/addUser", JSON.stringify(this.addForm), {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+          }
         })
         .then(res => {
           console.log(res);
@@ -244,13 +349,14 @@ export default {
           console.log(err);
         });
     },
+    //更新用户
     update() {
       // 值拷贝
       let params = JSON.parse(JSON.stringify(this.addForm));
       // alert(this.validate());
       this.$axios({
         method: "post",
-        url: this.$api+"sys/user/update",
+        url: this.$api + "sys/user/update",
         data: params
       })
         .then(res => {
@@ -288,7 +394,7 @@ export default {
         .then(() => {
           alert(row.id);
           this.$axios
-            .get(this.$api+"sys/user/delete", {
+            .get(this.$api + "sys/user/delete", {
               params: {
                 id: row.id
               }
@@ -317,9 +423,52 @@ export default {
       // this.addForm = JSON.parse(JSON.stringify(row));
       // :visible.sync="insertFormVisible" 展示用户信息添加框
       // this.insertFormVisible = true;
+    },
+    //角色select框值改变时候触发的事件
+    roleSelectChange(e) {
+      var arrNew = [];
+      var dataLength = this.selectOptions.length;
+      var eleng = e.length;
+      for (let i = 0; i < dataLength; i++) {
+        for (let j = 0; j < eleng; j++) {
+          if (e[j] === this.selectOptions[i].label) {
+            arrNew.push(this.selectOptions[i]);
+          }
+        }
+      }
+      this.$refs.tree.setCheckedNodes(arrNew); //设置勾选的值
+    },
+    //role角色列表选中事件
+    handleCheckChange() {
+      let res = this.$refs.tree.getCheckedNodes(true, true); //这里两个true，1. 是否只是叶子节点 2. 是否包含半选节点（就是使得选择的时候不包含父节点）
+      let arrLabel = [];
+      let arr = [];
+      res.forEach(item => {
+        arrLabel.push(item.label);
+        arr.push(item);
+      });
+      this.selectOptions = arr;
+      this.roleSelect = arrLabel;
+      console.log("arr:" + JSON.stringify(arr));
+      console.log("arrLabel:" + arrLabel);
+    },
+    //获取用户角色信息
+    getRoleList() {
+      this.$axios
+        .get(this.$api + "sys/user/add", {})
+        .then(response => {
+          // console.log(response);
+          if (response.data.status == 200) {
+            this.selectOptions = response.data.response;
+          }
+          // response.data.data.forEach(element => {
+          //   this.selectOptions.push({ name: element.name, code: element.code });
+          // });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-    // delete() {}
-    //
   },
   filters: {
     enableTxt: function(value) {
