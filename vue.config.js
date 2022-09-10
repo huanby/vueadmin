@@ -1,17 +1,18 @@
 module.exports = {
     productionSourceMap: false,
+    // 配置代理
     devServer: {
         port: 9999,
-        // proxy: {
-        //     '/api': {
-        //         target: 'http://127.0.0.1:8089/',
-        //         changeOrigin: true,
-        //         ws: true,
-        //         pathRewrite: {
-        //             '^/api': ''
-        //         }
-        //     }
-        // }
+        proxy: {
+            '/api': {
+                target: 'http://192.168.43.238:8089/',   //请求后台跨域地址
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        }
     },
     pages: {
         index: {

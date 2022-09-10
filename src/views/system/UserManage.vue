@@ -74,7 +74,7 @@
     </el-container>
 
     <!-- 新增用户表单dialog start -->
-    <el-dialog title="新增用户" :visible.sync="insertFormVisible" width center>
+    <el-dialog v-bind:title="addFormTitle" :visible.sync="insertFormVisible" width center>
       <el-form :model="addForm">
         <el-form-item label="用户名" :label-width="formLabelWidth">
           <el-input v-model="addForm.username" autocomplete="off"></el-input>
@@ -103,16 +103,16 @@
             <el-option label="禁用" :value="0"></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="角色" :label-width="formLabelWidth">
+        <el-form-item label="角色" :label-width="formLabelWidth">
           <el-select v-model="addForm.roles" multiple placeholder="请选择">
             <el-option
               v-for="item in selectOptions"
               :key="item.id"
               :label="item.rolename"
-              :value="item.rolesign"
+              :value="item.id"
             ></el-option>
           </el-select>
-        </el-form-item>-->
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="insertFormVisible = false">取 消</el-button>
@@ -172,6 +172,7 @@ export default {
       isInsert: true,
       insertFormVisible: false,
       // addForm
+      addFormTitle:"新增用户",
       addForm: {
         username: "",
         name: "",
@@ -351,6 +352,10 @@ export default {
     },
     //更新用户
     update() {
+      //多选框数据处理
+      if (this.addForm.roles) {
+            this.addForm.roles = this.addForm.roles.join(",");
+          }
       // 值拷贝
       let params = JSON.parse(JSON.stringify(this.addForm));
       // alert(this.validate());
@@ -358,6 +363,13 @@ export default {
         method: "post",
         url: this.$api + "sys/user/update",
         data: params
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // },
+        // params:{ //params,按照url拼接
+        //   user: this.$qs.stringify(JSON.stringify(this.addForm)),
+        //   rolestr: "aa22"
+        // }
       })
         .then(res => {
           console.log(res);
@@ -379,9 +391,9 @@ export default {
     // 修改用户
     handleEdit(row) {
       this.isInsert = false;
+      this.addFormTitle = "编辑用户";
       this.addForm = JSON.parse(JSON.stringify(row));
-      // :visible.sync="insertFormVisible" 展示用户信息添加框
-      this.insertFormVisible = true;
+      this.insertFormVisible = true; // :visible.sync="insertFormVisible" 展示用户信息添加框
     },
     // update() {},
     // 删除用户
